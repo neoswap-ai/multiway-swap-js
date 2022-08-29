@@ -1,0 +1,35 @@
+[project]
+name = "clarity-multiway-swap"
+authors = []
+description = ""
+telemetry = false
+requirements = []
+cache_dir = "C:\\Users\\kwisc\\Documents\\repos\\tradimple\\multiway-swap-js\\clarity-multiway-swap\\.\\.requirements"
+boot_contracts = ["pox", "costs-v2", "bns"]
+[contracts.monkeys]
+path = "contracts/monkeys.clar"
+
+[contracts.multiway-swap]
+path = "contracts/multiway-swap.clar"
+
+[contracts.nft-trait]
+path = "contracts/nft-trait.clar"
+
+[contracts.punks]
+path = "contracts/punks.clar"
+
+[contracts.whales]
+path = "contracts/whales.clar"
+
+[repl]
+costs_version = 2
+parser_version = 2
+
+[repl.analysis]
+passes = ["check_checker"]
+
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false

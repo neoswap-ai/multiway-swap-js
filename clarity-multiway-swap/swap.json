@@ -1,0 +1,32 @@
+{
+	"ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5" : {
+		"token" : -1000000,
+		"send" : [],
+		"receive" : [
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.whales", "token_id": 1},
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.punks", "token_id": 4}
+        ] 
+	},
+	"ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG" : {
+		"token" : 450000,
+		"send" : [
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.punks", "token_id": 4}
+        ],
+		"receive" : [
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.whales", "token_id": 3}
+        ] 
+	},
+	"ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC" : {
+		"token" : 500000,
+		"send" : [
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.whales", "token_id": 1},
+            {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.whales", "token_id": 3}
+        ],
+		"receive" : [] 
+	},
+    "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6" : {
+        "token" : 50000,
+        "send" : [],
+        "receive" : []
+    } 
+}
