@@ -26,8 +26,8 @@ Clarinet.test({
         ]);
         assertEquals(block.receipts.length, 2);
         assertEquals(block.height, 2);
-        assertEquals(block.receipts[0].result, `(ok u1)`);
-        assertEquals(block.receipts[1].result, `(ok u2)`);
+        assertEquals(block.receipts[0].result, `(ok u5)`);
+        assertEquals(block.receipts[1].result, `(ok u6)`);
 
         block = chain.mineBlock([
 
@@ -56,13 +56,13 @@ Clarinet.test({
         ]);
         assertEquals(block.receipts.length, 1);
         assertEquals(block.height, 2);
-        assertEquals(block.receipts[0].result, `(ok u1)`);
+        assertEquals(block.receipts[0].result, `(ok u5)`);
 
         block = chain.mineBlock([
             Tx.contractCall(
                 `${deployerWallet.address}.monkeys`,
                 'transfer',
-                ['u1', `'${w1.address}`, `'${w2.address}`],
+                ['u5', `'${w1.address}`, `'${w2.address}`],
                 w1.address
               ),
 
