@@ -4,7 +4,8 @@ const resolveToString = require('es6-template-strings/resolve-to-string')
 const { makeContractCall, makeContractDeploy, broadcastTransaction,
     AnchorMode, FungibleConditionCode, NonFungibleConditionCode,
     makeStandardSTXPostCondition, makeStandardNonFungiblePostCondition,
-    uintCV,createAssetInfo } = require('@stacks/transactions');
+    uintCV,createAssetInfo, makeContractSTXPostCondition,
+    makeContractNonFungiblePostCondition } = require('@stacks/transactions');
 const { StacksTestnet, StacksMainnet } = require('@stacks/network');
 const axios = require("axios").default;
 
@@ -180,27 +181,51 @@ class StacksContractGenerator {
                 if (contractFunction == "confirm-and-escrow") {
 
                     if (swap_parameters[userAddress].token < 0) {
-                      postConditions.push(makeStandardSTXPostCondition(
-                        userAddress,
-                        FungibleConditionCode.LessEqual,
-                        -swap_parameters[userAddress].token
-                      ))
+                        postConditions.push(makeStandardSTXPostCondition(
+                            userAddress,
+                            FungibleConditionCode.LessEqual,
+                            -swap_parameters[userAddress].token
+                        ))
                     }
 
-                    /*tradeItems.map(itemId => {
-                      const assetInfo = createAssetInfo(items[itemId].collectionAddress, items[itemId].smartContractName, items[itemId].collectionName)
-                      postConditions.push(makeStandardNonFungiblePostCondition(
-                        userAddress,
-                        NonFungibleConditionCode.DoesNotOwn,
-                        assetInfo,
-                        uintCV(parseInt(items[itemId].nftTokenId))
-                      ))
-                    })*/
+                    swap_parameters[userAddress].send.map(item => {
+                        const itemContractAddress = item.contract.split(".")[0]
+                        const itemContractName = item.contract.split(".")[1]
+                        const assetInfo = createAssetInfo(itemContractAddress, itemContractName, itemContractName)
+                        postConditions.push(makeStandardNonFungiblePostCondition(
+                            userAddress,
+                            NonFungibleConditionCode.DoesNotOwn,
+                            assetInfo,
+                            uintCV(parseInt(item.token_id))
+                        ))
+                    })
                 } else if (contractFunction == "finalize") {
-
-                    
+                    let total_stx_send = 0
+                    for (const userAddress in swap_parameters){
+                        if (swap_parameters[userAddress].token > 0) {
+                            total_stx_send += swap_parameters[userAddress].token
+                        }
+                        swap_parameters[userAddress].receive.map(item => {
+                            const itemContractAddress = item.contract.split(".")[0]
+                            const itemContractName = item.contract.split(".")[1]
+                            const assetInfo = createAssetInfo(itemContractAddress, itemContractName, itemContractName)
+                            postConditions.push(makeContractNonFungiblePostCondition(
+                                contractAddress,
+                                contractName,
+                                NonFungibleConditionCode.DoesNotOwn,
+                                assetInfo,
+                                uintCV(parseInt(item.token_id))
+                            ))
+                        })
+                    }
+                    postConditions.push(makeContractSTXPostCondition(
+                        contractAddress,
+                        contractName,
+                        FungibleConditionCode.GreaterEqual,
+                        total_stx_send
+                    ))
                 }
-
+ 
                 let txOptions = {
                     contractAddress: contractAddress,
                     contractName: contractName,
