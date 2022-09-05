@@ -24,6 +24,7 @@
     "@stacks/network": "^4.3.5",
     "@stacks/transactions": "^4.3.5",
     "axios": "^0.27.2",
-    "es6-template-strings": "^2.0.1"
+    "es6-template-strings": "^2.0.1",
+    "path": "^0.12.7"
   }
 }

@@ -1,4 +1,5 @@
-const fs = require('fs');
+const {readFileSync} = require('fs');
+const path = require('path')
 const compile = require('es6-template-strings/compile')
 const resolveToString = require('es6-template-strings/resolve-to-string')
 const { makeContractCall, makeContractDeploy, broadcastTransaction,
@@ -9,7 +10,7 @@ const { makeContractCall, makeContractDeploy, broadcastTransaction,
 const { StacksTestnet, StacksMainnet } = require('@stacks/network');
 // const axios = require("axios").default;
 
-const sc_data = fs.readFileSync("./template.clar", "utf8");
+const sc_data = readFileSync(path.resolve(__dirname, "template.clar"), "utf8");
 // const apiAddress = {
 //     Mainnet: "https://stacks-node-api.mainnet.stacks.co/extended/v1/",
 //     Testnet: "https://stacks-node-api.testnet.stacks.co/extended/v1/"
