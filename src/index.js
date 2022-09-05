@@ -84,7 +84,9 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
     }
 
     if (residual < 0 && residual_wallet_address) {
-        stx_release_escrow += `\t(unwrap-panic (as-contract (stx-transfer? u${-residual} tx-sender '${residual_wallet_address})))\n`
+        num_receivers += 1
+        receivers += `(define-constant RECEIVER-${num_receivers} '${residual_wallet_address})\n`
+        stx_release_escrow += `\t(unwrap-panic (as-contract (stx-transfer? u${-residual} tx-sender RECEIVER-${num_receivers})))\n`
     }
 
     const parameters = {

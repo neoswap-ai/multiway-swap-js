@@ -23,10 +23,5 @@
             {"contract": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.whales", "token_id": 3}
         ],
 		"receive" : [] 
-	},
-    "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6" : {
-        "token" : 50000,
-        "send" : [],
-        "receive" : []
-    } 
+	}
 }
