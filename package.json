@@ -1,8 +1,14 @@
 {
   "name": "multiway-swap-clarity-generator",
-  "version": "0.0.1",
-  "description": "��#\u0000 \u0000m\u0000u\u0000l\u0000t\u0000i\u0000w\u0000a\u0000y\u0000-\u0000s\u0000w\u0000a\u0000p\u0000-\u0000j\u0000s\u0000\r\u0000 \u0000",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Javascript library for generating multiway NFT swaps.",
+  "license": "MIT",
+  "author": "NeoSwap, Inc. (https://neoswap.ai/)",
+  "contributors": [
+    "Gustavo Esteves de Andrade",
+    "Kuba Kwiecien"
+  ],
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +16,6 @@
     "type": "git",
     "url": "git+https://github.com/neoswap-ai/multiway-swap-js.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/neoswap-ai/multiway-swap-js/issues"
   },
