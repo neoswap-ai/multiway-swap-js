@@ -18,11 +18,27 @@ const {generateMultiwaySmartContract, deploySmartContract, makeContractCall} = r
 let rawdata = fs.readFileSync('swap.json'); // JSON file with the multiway trade specifications
 let swap = JSON.parse(rawdata);
 
-const sc_code = generateMultiwaySmartContract(swap, "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6"); // Generate the smart contract code
+const sc_code = generateMultiwaySmartContract(
+  swap, 
+  "STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6"
+); // Generate the smart contract code
 
-deploySmartContract('Testnet', sc_code, 'TEST_2_multiway', 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01', 1000) // Deploy the contract to the network
+deploySmartContract(
+  'Testnet', 
+  sc_code, 
+  'TEST_2_multiway',
+  'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+  1000
+) // Deploy the contract to the network
 
-makeContractCall('ST2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXH4HF6PF', 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01', swap, 'ST2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXH4HF6PF', 'TEST_2_multiway', 'finalize', 'testnet') // Interact with the contract.
+makeContractCall(
+  'ST2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXH4HF6PF', 'b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01',
+  swap,
+  'ST2ZD731ANQZT6J4K3F5N8A40ZXWXC1XFXH4HF6PF',
+  'TEST_2_multiway',
+  'finalize',
+  'Testnet'
+) // Interact with the contract.
 
 ```
 
