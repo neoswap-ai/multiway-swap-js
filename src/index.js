@@ -30,6 +30,11 @@ const sc_data = readFileSync(path.resolve(__dirname, "template.clar"), "utf8");
 //     })
 // };
 
+/**
+ * Returns the code of the smart contract for the multiway trade.
+ * @param swap_parameters A object that contains the multiway trade specifications see documentation for more details.
+ * @param residual_wallet_address A stacks address so the residual will be sent.
+ */
 exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_address = "") => {
 
     let traders = ""
@@ -106,7 +111,14 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
     return sc_content;
 }
 
-
+/**
+ * Deploy the code of the smart contract for the multiway trade in the stacks blockchain.
+ * @param net The network to be used to deploy: Mainnet or Testnet.
+ * @param code The smart contract code to be deployed in the stacks network.
+ * @param contractName The name of the contract.
+ * @param senderKey  A stacks wallet account key.
+ * @param feeMicroSTX The fee to be used for the deployment.
+ */
 exports.deploySmartContract = (net, code, contractName, senderKey, feeMicroSTX) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -144,6 +156,16 @@ exports.deploySmartContract = (net, code, contractName, senderKey, feeMicroSTX) 
     })
 };
 
+/**
+ * Interact with the smart contract for the multiway trade in the stacks blockchain.
+ * @param userAddress A object that contains the multiway trade specifications see documentation for more details.
+ * @param senderKey A stacks wallet account key.
+ * @param swap_parameters A object that contains the multiway trade specifications see documentation for more details.
+ * @param contractAddress The stacks address of the contract.
+ * @param contractName The name of the contract.
+ * @param contractFunction Which contract function to be called: confirm-and-escrow or finalize.
+ * @param net Network to be used for the contract call: Mainnet or Testnet.
+ */
 exports.makeContractCall = (
     userAddress,
     senderKey,
