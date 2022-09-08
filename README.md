@@ -13,7 +13,11 @@ Basic example:
 
 ```javascript
 const fs = require('fs');
-const {generateMultiwaySmartContract, deploySmartContract, makeContractCall} = require('multiway-swap-js')
+const { 
+  generateMultiwaySmartContract,
+  deploySmartContract,
+  makeContractCall
+} = require('multiway-swap-js')
 
 let rawdata = fs.readFileSync('swap.json'); // JSON file with the multiway trade specifications
 let swap = JSON.parse(rawdata);
