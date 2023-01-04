@@ -1,7 +1,7 @@
 
 ;; multiway-swap
 ;; Contract to facilitate a multiway NFT swap.
-;; Each of the parties involved has to call confirm-and-escrow to ecrow their dues.
+;; Each of the parties involved has to call confirm-and-escrow to escrow their dues.
 ;; Once all parties confirmed, finalize has to be called to redistribute escrowed items.
 ;; At any point before the swap is finalized it can be canceled by a party involved, 
 ;; regardles of whether they already called confirm-and-escrow or not.
