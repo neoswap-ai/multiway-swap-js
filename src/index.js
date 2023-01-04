@@ -107,6 +107,7 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
 
     let sc_compiled = compile(sc_data);
     let sc_content = resolveToString(sc_compiled, parameters);
+    sc_content = sc_content.replace(/\r/g, '');
 
     return sc_content;
 }
@@ -119,20 +120,28 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
  * @param senderKey  A stacks wallet account key.
  * @param feeMicroSTX The fee to be used for the deployment.
  */
-exports.deploySmartContract = (net, code, contractName, senderKey, feeMicroSTX) => {
+exports.deploySmartContract = (net, code, contractName, senderKey, feeMicroSTX, nonce=null) => {
     return new Promise(async (resolve, reject) => {
         try {
             console.log(contractName + ": deploying smart contract")
             const network = net == "Mainnet" ? new StacksMainnet() : new StacksTestnet()
 
+            // Only cast nonce to bigint if it is not null
+            const bnonce = nonce == null ? null : BigInt(nonce)
             let txOptions = {
                 contractName: contractName,
                 codeBody: code,
                 senderKey: senderKey,
                 network: network,
                 anchorMode: AnchorMode.Any,
-                fee: BigInt(feeMicroSTX)
+                fee: BigInt(feeMicroSTX),
+                nonce: bnonce,
             };
+
+            // if nonce is null remove the nonce from the options
+            if (nonce == null) {
+                delete txOptions.nonce
+            }
 
             console.log(contractName + ": calling makeContractDeploy()")
             let transaction = await makeContractDeploy(txOptions);
