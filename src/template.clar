@@ -1,4 +1,3 @@
-
 ;; multiway-swap
 ;; Contract to facilitate a multiway NFT swap.
 ;; Each of the parties involved has to call confirm-and-escrow to ecrow their dues.
@@ -10,9 +9,10 @@
 ${traders}
 ;; receivers
 ${receivers}
+
 ;; constants
 (define-constant ERR_ESCROW_NOT_FILLED u401)
-(define-constant ERR_SWAP_FINAIZED u402)
+(define-constant ERR_SWAP_FINALIZED u402)
 (define-constant ERR_RELEASING_ESCROW_FAILED u491)
 (define-constant ERR_SWAP_CANCELED u499)
 
@@ -95,7 +95,7 @@ ${traders_return_escrow}
     (let 
         ((trState (unwrap! (map-get? TraderState tx-sender) (err ERR_IS_NOT_TRADER))))
 
-        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINAIZED))
+        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINALIZED))
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_CANCELED)) (err ERR_SWAP_CANCELED))
         (asserts! (not (is-eq trState TRADER_STATE_CONFIRMED)) (err ERR_CALLER_ALREADY_ESCROWED))
         (try! (deposit-escrow))
@@ -106,7 +106,7 @@ ${traders_return_escrow}
 (define-public (cancel) 
     (begin
         (unwrap! (map-get? TraderState tx-sender) (err ERR_IS_NOT_TRADER))
-        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINAIZED))
+        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINALIZED))
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_CANCELED)) (err ERR_SWAP_CANCELED))
         (unwrap! (return-escrow) (err ERR_RELEASING_ESCROW_FAILED))
         (ok true)
@@ -116,7 +116,7 @@ ${traders_return_escrow}
 (define-public (finalize) 
     (begin
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_ACTIVE)) (err ERR_ESCROW_NOT_FILLED))
-        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINAIZED))
+        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINALIZED))
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_CANCELED)) (err ERR_SWAP_CANCELED))
         (unwrap! (release-escrow) (err ERR_RELEASING_ESCROW_FAILED))
         (ok true)

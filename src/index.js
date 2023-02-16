@@ -67,7 +67,7 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
             traders += `(define-constant TRADER-${num_traders} '${user})\n`
             traders_state += `(map-set TraderState TRADER-${num_traders} TRADER_STATE_ACTIVE)\n`
             deposit_escrow += `\t(if (is-eq tx-sender TRADER-${num_traders})\n            (begin\n`
-            traders_return_escrow += `\t(if (is-eq (default-to ERR_IS_NOT_TRADER (map-get? TraderState TRADER-1)) TRADER_STATE_CONFIRMED)\n            (begin\n`
+            traders_return_escrow += `\t(if (is-eq (default-to ERR_IS_NOT_TRADER (map-get? TraderState TRADER-${num_traders})) TRADER_STATE_CONFIRMED)\n            (begin\n`
             if (swap_parameters[user].token < 0) {
                 deposit_escrow += `\t\t(unwrap! (stx-transfer? u${-swap_parameters[user].token} tx-sender (as-contract tx-sender)) (err ERR_FAILED_TO_ESCROW_STX))\n`
                 traders_return_escrow += `\t\t(unwrap-panic (as-contract (stx-transfer? u${-swap_parameters[user].token} tx-sender TRADER-${num_traders})))\n`
