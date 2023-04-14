@@ -96,7 +96,7 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
 
     if (room_id != "") {
         // make a comment in clarity with this formar: RoomId: <room_id>
-        room_id = `;; RoomId: ${room_id}`
+        room_id = `;; Room: https://neoswap.xyz/rooms/${room_id}`
     }
 
     if (swap_id != "") {
