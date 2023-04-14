@@ -16,6 +16,7 @@ ${receivers}
 (define-constant ERR_RELEASING_ESCROW_FAILED u491)
 (define-constant ERR_SWAP_CANCELED u499)
 
+(define-constant ERR_IS_NOT_ADMIN u409)
 (define-constant ERR_IS_NOT_TRADER u410)
 (define-constant ERR_CALLER_ALREADY_ESCROWED u411)
 (define-constant ERR_FAILED_TO_ESCROW_STX u412)
@@ -31,6 +32,8 @@ ${receivers}
 (define-constant TRADER_STATE_CANCELED u119)
 
 (define-constant NUM_TRADERS u${num_traders})
+
+(define-constant DEPLOYER tx-sender)
 
 ;; data maps and vars
 (define-data-var swapState uint SWAP_STATE_ACTIVE)
@@ -106,6 +109,16 @@ ${traders_return_escrow}
 (define-public (cancel) 
     (begin
         (unwrap! (map-get? TraderState tx-sender) (err ERR_IS_NOT_TRADER))
+        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINALIZED))
+        (asserts! (not (is-eq (var-get swapState) SWAP_STATE_CANCELED)) (err ERR_SWAP_CANCELED))
+        (unwrap! (return-escrow) (err ERR_RELEASING_ESCROW_FAILED))
+        (ok true)
+    )
+)
+
+(define-public (admin-cancel) 
+    (begin
+        (asserts! (is-eq tx-sender DEPLOYER) (err ERR_IS_NOT_ADMIN))
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_FINALIZED)) (err ERR_SWAP_FINALIZED))
         (asserts! (not (is-eq (var-get swapState) SWAP_STATE_CANCELED)) (err ERR_SWAP_CANCELED))
         (unwrap! (return-escrow) (err ERR_RELEASING_ESCROW_FAILED))
