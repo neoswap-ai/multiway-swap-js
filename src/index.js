@@ -35,7 +35,7 @@ const sc_data = readFileSync(path.resolve(__dirname, "template.clar"), "utf8");
  * @param swap_parameters A object that contains the multiway trade specifications see documentation for more details.
  * @param residual_wallet_address A stacks address so the residual will be sent.
  */
-exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_address = "") => {
+exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_address = "", room_id = "", swap_id = "") => {
 
     let traders = ""
     let receivers = ""
@@ -94,7 +94,19 @@ exports.generateMultiwaySmartContract = (swap_parameters, residual_wallet_addres
         stx_release_escrow += `\t(unwrap-panic (as-contract (stx-transfer? u${-residual} tx-sender RECEIVER-${num_receivers})))\n`
     }
 
+    if (room_id != "") {
+        // make a comment in clarity with this formar: RoomId: <room_id>
+        room_id = `;; RoomId: ${room_id}`
+    }
+
+    if (swap_id != "") {
+        // make a comment in clarity with this formar: SwapId: <swap_id>
+        swap_id = `;; SwapId: ${swap_id}`
+    }
+
     const parameters = {
+        swap_id: swap_id,
+        room_id: room_id,
         traders: traders,
         receivers: receivers,
         num_traders: num_traders,

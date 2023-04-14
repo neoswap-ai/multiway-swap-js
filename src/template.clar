@@ -4,6 +4,8 @@
 ;; Once all parties confirmed, finalize has to be called to redistribute escrowed items.
 ;; At any point before the swap is finalized it can be canceled by a party involved, 
 ;; regardles of whether they already called confirm-and-escrow or not.
+${room_id}
+${swap_id}
 
 ;; traders
 ${traders}
