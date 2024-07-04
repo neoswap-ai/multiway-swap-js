@@ -19,7 +19,7 @@
 
 # About the Project
 
-A multi-way swap refers to a trading arrangement involving more than two parties, where each party can trade assets in such a way that all participants benefit. This concept is particularly useful in contexts where direct exchanges between two parties might not be possible or optimal.
+A multi-way swap refers to a trading arrangement involving more than two parties, where each party can trade assets in such a way that all participants benefit. This concept is particularly useful in contexts where direct exchanges between two parties might not be possible or optimal. This project facilitates multi-way swaps on Stacks.
 
 ### Installation
 
